@@ -50,9 +50,6 @@ cfg['linker_args'] = [
 #include "hcv2.h"
 #include "hcv.h"
 
-
-
-
 #define LIB_NAME hcv
 
 #define PASTE(a, b) a##b
@@ -269,6 +266,7 @@ PYBIND11_MODULE(LIB_NAME, m) {
 	m.def("fillPolygon", &fillPolygon,"void fillPolygon(Img &img, vPoint& pts)");
 	m.def("printPointVector", &printPointVector,"void printPointVector(vPoint& pts)");
 
+
 	py::class_<Point>(m, "Point")
 		.def(py::init<const int, const int>())
 		.def_readwrite("x", &Point::x)
@@ -277,6 +275,7 @@ PYBIND11_MODULE(LIB_NAME, m) {
 	py::class_<Ray>(m, "Ray")
 		.def(py::init<>())
 
+        .def_readwrite("grain_stats", &Ray::grain_stats)
         .def_readwrite("img", &Ray::img)
         .def_readwrite("img_tmp", &Ray::img_tmp)
         .def_readwrite("mask", &Ray::mask)
@@ -306,7 +305,9 @@ PYBIND11_MODULE(LIB_NAME, m) {
 		.def("info", &Ray::info)
 		.def("init", &Ray::init)
 		.def("getGrain", &Ray::getGrain,"getGrain(Point p)")
+		.def("mergeGrainMask", &Ray::mergeGrainMask,"mergeGrainMask() np_mask.add(np_grain_mask);")
 		.def("test", &Ray::test);
+
 
 	py::class_<stats>(m, "stats")
         .def_readwrite("mean", &stats::mean)
@@ -373,3 +374,5 @@ PYBIND11_MODULE(LIB_NAME, m) {
 	py::bind_vector<std::vector<double>> (m, "vDouble");
 	py::bind_vector<std::vector<Point>>  (m, "vPoint");
 }
+
+

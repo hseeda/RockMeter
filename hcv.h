@@ -341,11 +341,11 @@ public:
     vPoint grain_pts;
     vDouble grain_radii;
 
-    np<uint8_t> np_img;
-    np<uint8_t> np_img_tmp;
-    np<uint8_t> np_mask;
-    np<uint8_t> np_mask_tmp;
-    np<uint8_t> np_grain_mask;
+    Img np_img;
+    Img np_img_tmp;
+    Img np_mask;
+    Img np_mask_tmp;
+    Img np_grain_mask;
 
     pyImg img, img_tmp, mask, mask_tmp, grain_mask;
 
@@ -595,6 +595,10 @@ public:
         return false;
     }
 
+    void mergeGrainMask()
+	{
+		np_mask.or(np_grain_mask);
+	}
     void test(Point& p, vPoint &points)
     {
 //        mask_floodFill(p,np_mask);

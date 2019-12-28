@@ -47,15 +47,19 @@ def nps(in1):
     print('-----------------------')
 
 
+# %% cv version
 def cv_version():
     print(cv2.__version__)
 
 
 # %% show image using cv2
-def show(img):
-    cv2.imshow("img", img);
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+def show(img, keep = 1, name = "img"):
+    cv2.imshow(name, img);
+    if keep == 1:
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+    else:
+        cv2.waitKey(keep)
 
 
 def drawLine(inImg, p1, p2, i_line_width, color):
@@ -314,14 +318,15 @@ def scaleImg(img, scale):
 #
 
 # ======================================================================================
-def Ray_loadImg(Ray, file_name):
-    img = scaleImg(cv2.imread(file_name, cv2.IMREAD_GRAYSCALE), 0.5)
+def Ray_loadImg(Ray, file_name, scale = 0.5):
+    color_img = scaleImg(cv2.imread(file_name, cv2.IMREAD_COLOR), scale)
+    img = scaleImg(cv2.imread(file_name, cv2.IMREAD_GRAYSCALE), scale)
     img_tmp = img.copy()
     mask = img[:, :].copy() * 0
     mask_tmp = mask.copy()
     grain_mask = mask.copy()
     Ray.init(img, img_tmp, mask, mask_tmp, grain_mask)
-
+    return color_img
 
 # ======================================================================================
 def Ray_setImg(Ray, i_img):

@@ -295,7 +295,11 @@ class np
 //            return 0;
 //        }
         void copy(np<T> &source)  { for (int i=0; i< sz; ++i) *(ptr+i) = *(source.ptr+i); }
-        void add(np<T> &source)   { for (int i=0; i< sz; ++i) *(ptr+i) += *(source.ptr+i); }
+        void or(np<T> &source)   { for (int i=0; i< sz; ++i)  *(ptr+i) |= *(source.ptr+i);}
+        void add(np<T> &source)   { for (int i=0; i< sz; ++i)  *(ptr+i) += *(source.ptr+i);}
+                // pr2c( int (*(ptr+i)) , int(*(source.ptr+i)) )
+
+
         void mult (np<T> &source) { for (int i=0; i< sz; ++i) *(ptr+i) = *(ptr+i) * *(source.ptr+i); }
         void mult (int n)         { for (int i=0; i< sz; ++i) *(ptr+i) = *(ptr+i) * n; }
         void zero()               { for (int i=0; i< sz; ++i) *(ptr+i) = 0; }
