@@ -60,8 +60,8 @@ def show(img):
 fn = "1.jpg"
 i = cv2.imread(fn)
 # hcv.cvi(i)
-# show(i)
-
+show(i)
+print(type(i))
 a = hcv.Img(i)
 a.info()
-print(hcv.dist_d(0,0,1,1))
+print(hcv.dist(0,0,1,1))

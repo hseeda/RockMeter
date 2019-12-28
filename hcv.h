@@ -380,8 +380,8 @@ public:
         np_mask_tmp.init(mask_tmp);
         np_grain_mask.init(grain_mask);
 
-        im = np_img. buffer.shape[0];
-        jm = np_img. buffer.shape[1];
+        im = (int) np_img. buffer.shape[0];
+        jm = (int) np_img. buffer.shape[1];
 
         TOL_START_RANGE =  10;
         TOL_STEP  = 5;

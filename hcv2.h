@@ -222,8 +222,12 @@ struct Point{
     int x, y;
     Point& operator = (const Point& pt){x = pt.x; y = pt.y; return *this; }
     Point& operator += (const Point& pt){x += pt.x; y += pt.y; return *this; }
-    Point& operator / (const double n){x = x / n; y = y / n; return *this; }
-};
+    Point& operator / (const double n){ 
+         x = (int)( (double) x / n );
+         y = (int)( (double) y / n );
+         return *this;
+         }
+    };
 ///=========================================================================================
 ///-----------------------------------------------------------------------------------------
 template<typename T>
@@ -243,9 +247,9 @@ class np
             buffer = arr.request();
             ptr = (T*) buffer.ptr;
             switch (buffer.ndim)
-            { case 1: sz = buffer.shape[0]; break;
-              case 2: sz = buffer.shape[0] * buffer.shape[1]; break;
-              case 3: sz = buffer.shape[0] * buffer.shape[1] * buffer.shape[2] ; break;
+            { case 1: sz = int (buffer.shape[0]); break;
+              case 2: sz = int (buffer.shape[0] * buffer.shape[1]); break;
+              case 3: sz = int (buffer.shape[0] * buffer.shape[1] * buffer.shape[2]) ; break;
             }
         }
 

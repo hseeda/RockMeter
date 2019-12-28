@@ -50,6 +50,9 @@ cfg['linker_args'] = [
 #include "hcv2.h"
 #include "hcv.h"
 
+
+
+
 #define LIB_NAME hcv
 
 #define PASTE(a, b) a##b
@@ -80,14 +83,14 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 }
 
 ///-----------------------------------------------------------------------------------------
-void print(const std::string& name) {
-	pr2("name = ",name);
-}
+// void print(const std::string& name) {
+// 	pr2("name = ",name);
+// }
 ///-----------------------------------------------------------------------------------------
-void dtest(py::dict d)
-{
-	d["999"] = 000;
-}
+// void dtest(py::dict d)
+// {
+// 	d["999"] = 000;
+// }
 ///-----------------------------------------------------------------------------------------
 //void test(py::list l) {
 //	//l.attr("pop")();
@@ -101,45 +104,45 @@ void dtest(py::dict d)
 //	l[0] = "999";
 //}
 ///-----------------------------------------------------------------------------------------
-void float_cast(py::list l) {
-	l[0] = 0.0;
-}
+// void float_cast(py::list l) {
+// 	l[0] = 0.0;
+// }
+// ///-----------------------------------------------------------------------------------------
+// int add(py::int_& i, py::int_& j) {
+// 	i = 99;
+// 	return (int)i + (int)j;
+// }
 ///-----------------------------------------------------------------------------------------
-int add(py::int_& i, py::int_& j) {
-	i = 99;
-	return (int)i + (int)j;
-}
-///-----------------------------------------------------------------------------------------
-py::array_t<double> add_arrays(py::array_t<double> input1, py::array_t<double> input2)
-{
-	auto buf1 = input1.request(), buf2 = input2.request();
+// py::array_t<double> add_arrays(py::array_t<double> input1, py::array_t<double> input2)
+// {
+// 	auto buf1 = input1.request(), buf2 = input2.request();
 
-	if (buf1.size != buf2.size)
-		throw std::runtime_error("Input shapes must match");
+// 	if (buf1.size != buf2.size)
+// 		throw std::runtime_error("Input shapes must match");
 
-	/*  allocate the buffer */
-	//py::array_t<double> result = py::array_t<double>(buf1.size);
-	pyarr(result,double,buf1.size);
+// 	/*  allocate the buffer */
+// 	//py::array_t<double> result = py::array_t<double>(buf1.size);
+// 	pyarr(result,double,buf1.size);
 
-	auto buf3 = result.request();
+// 	auto buf3 = result.request();
 
-	double* ptr1 = (double*)buf1.ptr,
-		* ptr2 = (double*)buf2.ptr,
-		* ptr3 = (double*)buf3.ptr;
+// 	double* ptr1 = (double*)buf1.ptr,
+// 		* ptr2 = (double*)buf2.ptr,
+// 		* ptr3 = (double*)buf3.ptr;
 
-	int X = buf1.shape[0];
-	int Y = buf1.shape[1];
+// 	int X = buf1.shape[0];
+// 	int Y = buf1.shape[1];
 
-	for (size_t idx = 0; idx < X; idx++)
-		for (size_t idy = 0; idy < Y; idy++) {
-			ptr3[idx * Y + idy] = ptr1[idx * Y + idy] + ptr2[idx * Y + idy];
+// 	for (size_t idx = 0; idx < X; idx++)
+// 		for (size_t idy = 0; idy < Y; idy++) {
+// 			ptr3[idx * Y + idy] = ptr1[idx * Y + idy] + ptr2[idx * Y + idy];
 
-			ptr1[idx * Y + idy] = 1234;
-		}
-	// reshape array to match input shape
-	result.resize({ X,Y });
-	return result;
-}
+// 			ptr1[idx * Y + idy] = 1234;
+// 		}
+// 	// reshape array to match input shape
+// 	result.resize({ X,Y });
+// 	return result;
+// }
 ///-----------------------------------------------------------------------------------------
 //void cvshow(py::array_t<uint8_t> img)
 //{
@@ -220,12 +223,11 @@ PYBIND11_MAKE_OPAQUE(std::vector<Point>);
 PYBIND11_MAKE_OPAQUE(std::vector<double>);
 PYBIND11_MODULE(LIB_NAME, m) {
 	m.doc() = "hcv plugin"; // optional module docstring
-	m.def("add", &add, "A function which adds two numbers", py::arg("i"), py::arg("j"));
-	m.def("float_cast", &float_cast);
-
-	m.def("print", &print);
+	// m.def("add", &add, "A function which adds two numbers", py::arg("i"), py::arg("j"));
+	// m.def("float_cast", &float_cast);
+	// m.def("add_arrays", &add_arrays, "Add two NumPy arrays");
+	// m.def("print", &print);
 	m.def("floodFill", &floodFill, "Flood Fill");
-
 
 
 	m.def("dist", py::overload_cast<Point&, Point&>(&dist));
@@ -266,14 +268,6 @@ PYBIND11_MODULE(LIB_NAME, m) {
 
 	m.def("fillPolygon", &fillPolygon,"void fillPolygon(Img &img, vPoint& pts)");
 	m.def("printPointVector", &printPointVector,"void printPointVector(vPoint& pts)");
-
-	m.def("add_arrays", &add_arrays, "Add two NumPy arrays");
-
-
-
-
-
-
 
 	py::class_<Point>(m, "Point")
 		.def(py::init<const int, const int>())
