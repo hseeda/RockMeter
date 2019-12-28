@@ -1,2 +1,2 @@
 # RockMeter
-RockMeter 1
+RockMeter
