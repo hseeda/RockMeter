@@ -48,7 +48,7 @@ for ix in range(stp // 2, w, stp):
         if fill_result:
             print(p.x, p.y)
             print (fill_result, r.grain_stats.stdev_ratio)
-            if (r.grain_stats.stdev_ratio < grain_quality_min):
+            if (rs.grain_stats.stdev_ratio < grain_quality_min):
                 print("mask merged")
                 rl.show(r.mask_tmp)
                 r.mergeGrainMask()
